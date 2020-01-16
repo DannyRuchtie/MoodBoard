@@ -1,2 +1,0 @@
-# Moodboard
-Created with CodeSandbox

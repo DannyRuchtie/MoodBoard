@@ -147,3 +147,12 @@ body {
 .navbar ul li:hover .description {
   color: var(--white);
 }
+
+#rootf:full-screen {
+  width: 100%;
+  height: 100%;
+}
+
+.hide {
+  backgorund: red;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import Konva from "konva";
 import { Stage, Layer, Image } from "react-konva";
 
 class URLImage extends React.Component {
@@ -34,6 +35,18 @@ class URLImage extends React.Component {
   };
 
   handleDragStart = e => {
+    // const id = e.target.name();
+    // const items = this.state.image.slice();
+    // const item = items.find(i => i.id === id);
+    // const index = items.indexOf(item);
+    // // remove from the list:
+    // items.splice(index, 1);
+    // // add to the top
+    // items.push(item);
+    // this.setState({
+    //   items
+    // });
+
     e.target.setAttrs({
       shadowOffset: {
         x: 0,
@@ -47,11 +60,6 @@ class URLImage extends React.Component {
   };
 
   handleDragEnd = e => {
-    this.setState({
-      x: e.target.x,
-      y: e.target.y
-    });
-
     e.target.to({
       duration: 0.1,
       easing: Konva.Easings.EaseOut,
@@ -62,11 +70,30 @@ class URLImage extends React.Component {
       shadowBlur: 10,
       ShadowOpacity: 0.4
     });
+
+    // const id = e.target.name();
+    // const items = this.state.image.slice();
+    // const item = this.state.image.find(i => i.id === id);
+    // const index = this.state.image.indexOf(item);
+    // // update item position
+    // items[index] = {
+    //   ...item,
+    //   x: e.target.x(),
+    //   y: e.target.y()
+    // };
+    // this.setState({ items });
+
+    this.setState({
+      x: e.target.x,
+      y: e.target.y
+    });
   };
 
   render() {
     return (
       <Image
+        name={this.props.name}
+        id={this.props.id}
         image={this.state.image}
         ref={node => {
           this.imageNode = node;
@@ -74,8 +101,8 @@ class URLImage extends React.Component {
         x={window.innerWidth / 2}
         y={window.innerHeight / 2}
         shadowColor="black"
-        shadowBlur={10}
-        shadowOpacity={0.4}
+        shadowBlur={12}
+        shadowOpacity={0.24}
         draggable
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
@@ -88,8 +115,8 @@ function Canvas(props) {
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
-        <URLImage src="https://source.unsplash.com/300x400" />
-        <URLImage src="https://source.unsplash.com/400x300" />
+        <URLImage name="1" id="100" src="https://source.unsplash.com/300x400" />
+        <URLImage name="2" id="10" src="https://source.unsplash.com/400x300" />
       </Layer>
     </Stage>
   );

@@ -6,7 +6,7 @@ import Canvas from "./Canvas.js";
 
 function App() {
   return (
-    <div className="container ">
+    <div className="container fullscreen" id="fullsccreen">
       <div className="navbar">
         <div className="header font-title">Moodoard</div>
         <ul>

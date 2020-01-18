@@ -35,18 +35,6 @@ class URLImage extends React.Component {
   };
 
   handleDragStart = e => {
-    // const id = e.target.name();
-    // const items = this.state.image.slice();
-    // const item = items.find(i => i.id === id);
-    // const index = items.indexOf(item);
-    // // remove from the list:
-    // items.splice(index, 1);
-    // // add to the top
-    // items.push(item);
-    // this.setState({
-    //   items
-    // });
-
     e.target.setAttrs({
       shadowOffset: {
         x: 0,
@@ -71,18 +59,6 @@ class URLImage extends React.Component {
       ShadowOpacity: 0.4
     });
 
-    // const id = e.target.name();
-    // const items = this.state.image.slice();
-    // const item = this.state.image.find(i => i.id === id);
-    // const index = this.state.image.indexOf(item);
-    // // update item position
-    // items[index] = {
-    //   ...item,
-    //   x: e.target.x(),
-    //   y: e.target.y()
-    // };
-    // this.setState({ items });
-
     this.setState({
       x: e.target.x,
       y: e.target.y
@@ -98,8 +74,8 @@ class URLImage extends React.Component {
         ref={node => {
           this.imageNode = node;
         }}
-        x={window.innerWidth / 2}
-        y={window.innerHeight / 2}
+        x={500}
+        y={500}
         shadowColor="black"
         shadowBlur={12}
         shadowOpacity={0.24}
@@ -111,9 +87,40 @@ class URLImage extends React.Component {
   }
 }
 
+function debounce(fn, ms) {
+  let timer;
+  return _ => {
+    clearTimeout(timer);
+    timer = setTimeout(_ => {
+      timer = null;
+      fn.apply(this, arguments);
+    }, ms);
+  };
+}
+
 function Canvas(props) {
+  const [dimensions, setDimensions] = React.useState({
+    height: window.innerHeight,
+    width: window.innerWidth
+  });
+
+  React.useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth
+      });
+    }, 1000);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return _ => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  });
+
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
+    <Stage width={dimensions.width} height={dimensions.height}>
       <Layer>
         <URLImage name="1" id="100" src="https://source.unsplash.com/300x400" />
         <URLImage name="2" id="10" src="https://source.unsplash.com/400x300" />

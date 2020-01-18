@@ -1,8 +1,6 @@
 function toggleFullScreen() {
   var fullscreen = document.getElementById("root");
 
-  console.log("test");
-
   if (fullscreen.requestFullscreen) {
     fullscreen.requestFullscreen();
   } else if (fullscreen.webkitRequestFullscreen) {

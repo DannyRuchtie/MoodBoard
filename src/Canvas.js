@@ -63,6 +63,10 @@ class URLImage extends React.Component {
       x: e.target.x,
       y: e.target.y
     });
+
+    const jsonStage = e.target.getStage();
+    const json = jsonStage.toJSON();
+    console.log(jsonStage);
   };
 
   render() {
@@ -76,12 +80,14 @@ class URLImage extends React.Component {
         }}
         x={500}
         y={500}
-        shadowColor="black"
-        shadowBlur={12}
-        shadowOpacity={0.24}
         draggable
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
+        shadowColor="black"
+        shadowBlur={10}
+        shadowOffsetX={0}
+        shadowOffsetY={4}
+        shadowOpacity={0.6}
       />
     );
   }

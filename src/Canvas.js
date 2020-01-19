@@ -6,6 +6,7 @@ class URLImage extends React.Component {
   state = {
     image: null
   };
+
   componentDidMount() {
     this.loadImage();
   }
@@ -24,14 +25,9 @@ class URLImage extends React.Component {
     this.image.addEventListener("load", this.handleLoad);
   }
   handleLoad = () => {
-    // after setState react-konva will update canvas and redraw the layer
-    // because "image" property is changed
     this.setState({
       image: this.image
     });
-    // if you keep same image object during source updates
-    // you will have to update layer manually:
-    // this.imageNode.getLayer().batchDraw();
   };
 
   handleDragStart = e => {
@@ -66,8 +62,13 @@ class URLImage extends React.Component {
 
     const jsonStage = e.target.getStage();
     const json = jsonStage.toJSON();
-    console.log(jsonStage);
+    console.log(json);
+
+    const PrevSession = localStorage.MoodBoardStage;
   };
+
+  // var json = (localStorage.MoodBoardStage = json);
+  // var stage = Konva.Node.create(json, "container");
 
   render() {
     return (
@@ -128,8 +129,10 @@ function Canvas(props) {
   return (
     <Stage width={dimensions.width} height={dimensions.height}>
       <Layer>
-        <URLImage name="1" id="100" src="https://source.unsplash.com/300x400" />
-        <URLImage name="2" id="10" src="https://source.unsplash.com/400x300" />
+        <URLImage name="1" src="https://source.unsplash.com/300x400" />
+        <URLImage name="2" src="https://source.unsplash.com/400x300" />
+        <URLImage name="3" src="https://source.unsplash.com/200x300" />
+        <URLImage name="4" src="https://source.unsplash.com/260x300" />
       </Layer>
     </Stage>
   );

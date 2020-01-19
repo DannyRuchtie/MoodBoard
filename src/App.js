@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { HotKeys } from "react-hotkeys";
 import { motion } from "framer-motion";
 
 import "./styles.css";
@@ -6,31 +7,53 @@ import ListItem from "./ListItem.js";
 import Canvas from "./Canvas.js";
 
 function App() {
-  const [active, setActive] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const variants = {
+    open: { x: "-100%" },
+    closed: { x: 0 }
+  };
+
+  const toggleMenu = React.useCallback(() => {
+    console.log("yes");
+    setIsOpen(!isOpen);
+
+  });
+
+  const keyMap = {
+    TOGGLE_MENU: "m"
+  };
+
+  const handlers = {
+    TOGGLE_MENU: toggleMenu
+  };
 
   return (
-    <div className="container fullscreen" id="fullsccreen">
-      <motion.div
-        className="rectangle"
-        animate={active ? { opacity: 1, x: "-100%" } : { opacity: 1, x: 0 }}
-        onClick={() => setActive(!active)}
-      >
-        <div className="navbar">
-          <div className="header font-title">Moodoard</div>
-          <ul>
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
-          </ul>
-          <div className="footer ont-secondary" />
-        </div>
-      </motion.div>
+    <HotKeys keyMap={keyMap} handlers={handlers}>
+      <div className="container fullscreen" id="fullsccreen">
+        {/* {state && (  )} */}
 
-      <Canvas />
-    </div>
+        <motion.div animate={isOpen ? "open" : "closed"} variants={variants}>
+          <div className="navbar">
+            <div className="header font-title">Moodoard</div>
+
+            <ul>
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+            </ul>
+            <div className="footer ont-secondary" />
+          </div>
+        </motion.div>
+
+        {/* <button onClick={() => setIsOpen(!isOpen)}>Toggle</button> */}
+
+        <Canvas />
+      </div>
+    </HotKeys>
   );
 }
 export default App;

@@ -84,6 +84,10 @@ body {
   border-right: 1px solid var(--gray-3);
 }
 
+.hideNavbar {
+  left: -100%;
+}
+
 .navbar .header {
   padding: 0.5rem 1rem;
   height: 2.5rem;
